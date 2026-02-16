@@ -1,6 +1,41 @@
-# Arthrodesis Procedures in Brazil (SUS, 2015–2020)
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## Project Overview
 
 Epidemiological analysis of spinal arthrodesis (fusion) procedures in Brazil's Universal Healthcare System (SUS), using DATASUS hospitalization records. Includes Weinstein-style geographic variation analysis, enhanced choropleths, and patient flow network mapping.
+
+## Commands
+
+```bash
+# Setup environment
+python3.13 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+
+# Execute full notebook (headless, ~3-5 min on Apple Silicon)
+jupyter nbconvert --to notebook --execute \
+  --ExecutePreprocessor.timeout=600 \
+  comprehensive_analysis.ipynb \
+  --output comprehensive_analysis_executed.ipynb
+
+# Run Section 17 standalone (Sankey + Chord diagrams)
+.venv/bin/python run_section17.py
+
+# Verify output integrity
+shasum -c output/MANIFEST.sha1
+```
+
+## Known Gotchas
+
+- **geobr downloads**: First run downloads ~50MB of IBGE shapefiles (cached in `~/.cache/geobr/`). Sections 7, 14, 15, 16 are the bottleneck.
+- **Moran's I permutations**: Uses 9999 permutations — p-values vary slightly between runs but significance is stable.
+- **COVID-19**: 2020 data reflects pandemic disruption. Mann-Kendall trend results need this caveat.
+- **Cross-state flow**: Only 2.1% of patients cross state borders; flow analysis focuses on this subset.
+- **Matplotlib backend**: Use `Agg` for headless/script execution.
+- **Region color codes**: South=#e41a1c, Southeast=#377eb8, Middle West=#4daf4a, Northeast=#984ea3, North=#ff7f00 — keep consistent across all figures.
+- **Figure export**: All figures saved at 150 DPI with `bbox_inches='tight'`.
 
 ## Project Goals
 
