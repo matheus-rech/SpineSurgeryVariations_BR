@@ -168,7 +168,7 @@ const methodsContent = [
   p([t("Regional comparisons (N=5 macro-regions: North, Northeast, Southeast, South, Center-West) were performed using Kruskal-Wallis tests with Dunn\u2019s post-hoc comparisons. Temporal trends (2015\u20132020) were assessed using Mann-Kendall tests with Sen\u2019s slope estimation. Spearman rank correlations were computed between state-level procedure rates, specialist density (neurosurgeons plus orthopedists per 100,000), mortality, mean age, cost, and LOS. The association between diagnosis distribution and region was tested using Chi-square with Cram\u00E9r\u2019s V. A two-tailed p<0.05 was considered statistically significant.")]),
 
   subheading("Patient Flow Analysis"),
-  p([t("Inter-state patient flow was quantified by comparing each patient\u2019s state of residence (res_SIGLA_UF) with the state where surgery was performed (int_SIGLA_UF). Net flow balance, percentage of imported caseload, and top flow corridors were computed. Geographic flow arrows and micropoint density maps were generated to visualize referral patterns.")]),
+  p([t("Inter-state patient flow was quantified by comparing each patient\u2019s state of residence with the state where surgery was performed, as recorded in the SIH/SUS administrative fields. Net flow balance, percentage of imported caseload, and top flow corridors were computed. Geographic flow arrows and micropoint density maps were generated to visualize referral patterns.")]),
 
   subheading("Software"),
   p([t("All analyses were performed using Python 3.13 with pandas 3.0, numpy 2.4, scipy 1.17, geopandas 1.1, libpysal 4.14, esda 2.8, scikit-posthocs 0.12, pymannkendall 1.4, and matplotlib 3.10. The complete analytical pipeline is available as a reproducible Jupyter notebook.")]),
@@ -258,22 +258,78 @@ const refsContent = [
 ];
 
 // ── TABLES ───────────────────────────────────────────────────
+
+// Table 1 — Top 10 states by procedure volume
+const table1Heading = [
+  heading("Table 1. Arthrodesis Procedures by State: Volume, Rate, and Outcomes (Top 15 States)", 2),
+];
+const table1Widths = [900, 1200, 1100, 1300, 1200, 1100, 1100, 1460];
+const table1 = makeTable(
+  ["State", "Region", "N", "Rate/100k", "Mortality (%)", "Mean LOS", "Mean Cost (BRL)", "SDR"],
+  [
+    ["PR", "South", "10,038", "87.8", "1.16", "5.2", "11,924", "2.87"],
+    ["GO", "Center-West", "4,710", "67.1", "0.40", "5.3", "12,849", "2.19"],
+    ["RS", "South", "6,259", "55.0", "1.05", "8.9", "11,818", "1.80"],
+    ["SC", "South", "3,146", "43.9", "0.89", "7.3", "11,136", "1.44"],
+    ["MG", "Southeast", "7,113", "33.6", "1.45", "8.5", "11,911", "1.10"],
+    ["DF", "Center-West", "984", "32.6", "1.02", "12.4", "9,476", "1.07"],
+    ["ES", "Southeast", "1,217", "30.3", "0.74", "8.3", "9,074", "0.99"],
+    ["MS", "Center-West", "747", "26.9", "0.94", "12.5", "10,927", "0.88"],
+    ["SP", "Southeast", "11,298", "24.6", "1.88", "10.2", "10,703", "0.81"],
+    ["AC", "North", "210", "23.8", "1.90", "8.5", "7,875", "0.78"],
+    ["RJ", "Southeast", "3,574", "20.7", "1.68", "14.7", "8,657", "0.68"],
+    ["PI", "Northeast", "669", "20.4", "1.35", "14.6", "12,622", "0.67"],
+    ["TO", "North", "310", "19.7", "1.94", "21.3", "8,503", "0.65"],
+    ["RO", "North", "336", "18.9", "0.60", "11.9", "6,208", "0.62"],
+    ["SE", "Northeast", "399", "17.4", "3.01", "11.9", "8,850", "0.57"],
+  ],
+  table1Widths,
+);
+const table1Footer = p(
+  [t("Rate = cumulative procedures per 100,000 inhabitants (2015\u20132020). SDR = Standardized Discharge Ratio (state rate / national rate). LOS = length of stay. Remaining 12 states (PE, CE, BA, MA, MT, PA, AM, RR, AP, AL, PB, RN) had rates <17 per 100,000.", { size: S(9), italics: true })],
+  { spacing: { after: 200, line: 276 } }
+);
+
+// Table 2 — Yearly trends
+const table2Heading = [
+  p([t("")], { spacing: { after: 200 } }),
+  heading("Table 2. Yearly Trends in Arthrodesis Procedures (2015\u20132020)", 2),
+];
+const table2Widths = [1000, 1100, 1200, 1400, 1200, 1800, 1660];
+const table2 = makeTable(
+  ["Year", "N", "Mean Age", "Mortality (%)", "Mean LOS", "Mean Cost (adj BRL)", "ICU (%)"],
+  [
+    ["2015", "10,703", "47.3", "1.22", "9.3", "13,845", "2,177"],
+    ["2016", "10,476", "47.6", "1.29", "9.4", "12,705", "2,230"],
+    ["2017", "10,534", "48.0", "1.42", "9.1", "11,781", "2,122"],
+    ["2018", "10,013", "48.3", "1.22", "9.1", "9,669", "2,228"],
+    ["2019", "9,749", "49.2", "1.25", "8.8", "9,275", "2,295"],
+    ["2020", "7,343", "47.6", "1.59", "9.1", "9,029", "2,408"],
+  ],
+  table2Widths,
+);
+const table2Footer = p(
+  [t("Cost adjusted for inflation using IPCA (base year 2020). ICU = number of ICU admissions. LOS = length of stay in days.", { size: S(9), italics: true })],
+  { spacing: { after: 200, line: 276 } }
+);
+
 const table3Heading = [
+  p([t("")], { spacing: { after: 200 } }),
   heading("Table 3. Weinstein-Style Variation Metrics: Brazil vs. United States", 2),
 ];
 
-const table3Widths = [2200, 1800, 1800, 1800, 1760];
+const table3Widths = [2400, 2300, 2300, 2360];
 const table3 = makeTable(
-  ["Metric", "Brazil SUS\nAll Arthrodesis", "Brazil SUS\nLumbar Degen.", "US Lumbar Fusion\n(Weinstein)", "p*"],
+  ["Metric", "Brazil SUS\nAll Arthrodesis", "Brazil SUS\nLumbar Degen.", "US Lumbar Fusion\n(Weinstein)"],
   [
-    ["Geographic unit", "State (N=27)", "State (N=27)", "HRR (N=306)", "\u2014"],
-    ["Period", "2015\u20132020", "2015\u20132020", "1992\u20132003", "\u2014"],
-    ["Total procedures", "58,818", "25,880", "\u2014", "\u2014"],
-    ["Rate per 100,000/yr", "4.66", "2.05", "\u2014", "\u2014"],
-    ["CV (%)", "86.9", "125.2", "49.5", "\u2014"],
-    ["Extremal ratio", "49.7", "100.4", "21.0", "\u2014"],
-    ["IQR ratio", "2.68", "5.20", "2.01", "\u2014"],
-    ["Mean SDR", "0.83", "0.82", "1.1", "\u2014"],
+    ["Geographic unit", "State (N=27)", "State (N=27)", "HRR (N=306)"],
+    ["Period", "2015\u20132020", "2015\u20132020", "1992\u20132003"],
+    ["Total procedures", "58,818", "25,880", "\u2014"],
+    ["Rate per 100,000/yr", "4.66", "2.05", "\u2014"],
+    ["CV (%)", "86.9", "125.2", "49.5"],
+    ["Extremal ratio", "49.7", "100.4", "21.0"],
+    ["IQR ratio", "2.68", "5.20", "2.01"],
+    ["Mean SDR", "0.83", "0.82", "1.1"],
   ],
   table3Widths,
 );
@@ -391,6 +447,8 @@ const doc = new Document({
       // Tables
       new Paragraph({ children: [new PageBreak()] }),
       heading("TABLES", 1),
+      ...table1Heading, table1, table1Footer,
+      ...table2Heading, table2, table2Footer,
       ...table3Heading, table3,
       ...table4Heading, table4,
       ...table5Heading, table5,
