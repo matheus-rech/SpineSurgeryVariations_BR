@@ -1,0 +1,9 @@
+Metric,Brazil_SUS_All_Arthrodesis,Brazil_SUS_Lumbar_Degen,US_Lumbar_Fusion_Weinstein,Notes
+Geographic_unit,State (N=27),State (N=27),HRR (N=306),Different unit sizes limit direct comparison
+Period,2015-2020,2015-2020,1992-2003,
+Procedures,58818,25880,,
+Rate_per_100k_yr,4.66,2.05,,
+CV_pct,86.9,125.2,49.5,Brazil shows greater variation at all levels
+Extremal_ratio,49.7,100.4,21.0,Brazil extremal ratio 2-5x higher than US
+IQR_ratio,2.68,5.20,2.01,Lumbar degenerative IQR ratio much higher in Brazil
+Mean_SDR,0.83,0.82,1.1,Brazil mean SDR < 1.0 due to many low-volume states

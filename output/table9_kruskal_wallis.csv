@@ -1,0 +1,6 @@
+Outcome,H_statistic,df,p_value,eta_squared,Significant
+Annual rate/100k,16.13,4,0.0028483060295718134,0.551,Yes
+Mortality (%),3.49,4,0.4800952377254104,0.0,No
+Mean LOS (days),6.27,4,0.17971486534137895,0.103,No
+Mean cost (BRL),12.38,4,0.014767806384469723,0.381,Yes
+Mean age (years),17.83,4,0.001334242563944859,0.628,Yes

@@ -1,0 +1,20 @@
+# Python virtual environment
+.venv/
+__pycache__/
+*.pyc
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
+
+# Executed notebook (regenerable from source)
+comprehensive_analysis_executed.ipynb
+
+# Standalone helper scripts (code lives in notebook)
+run_section17.py
+
+# Large data files (obtain from PI)
+data/*.xlsx
+data/*.csv
+
+# OS files
+.DS_Store

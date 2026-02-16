@@ -1,0 +1,7 @@
+Category,ICD10_codes,N_procedures,Pct_total,National_rate_100k_yr,CV_pct,Extremal_ratio,IQR_ratio,Q1_rate,Q3_rate,Mean_SDR
+Lumbar degenerative,"M51.x, M47.x, M48.0x",25880,44.0,2.05,125.2,100.4,5.20,0.35,1.83,0.82
+Cervical degenerative,"M50.x, M47.2x",4642,7.9,0.37,94.1,76.4,6.49,0.07,0.47,0.77
+Trauma,"S12.x, S22.x, S32.x, S13.x, S14.x, S24.x, S34.x, T91.x",16114,27.4,1.28,62.4,269.0,2.64,0.64,1.68,0.88
+Deformity,"M40.x, M41.x, M43.1",1752,3.0,0.14,104.5,41.3,5.07,0.03,0.16,0.88
+Other,All remaining,10430,17.7,,,,,,
+TOTAL,,58818,100.0,4.66,86.9,49.7,2.68,1.78,4.76,0.83

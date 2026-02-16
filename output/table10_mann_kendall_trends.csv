@@ -1,0 +1,7 @@
+Variable,Trend,Tau,S,p_value,Slope_Sen,Significant
+Procedure rate/100k,decreasing,-0.867,-13.0,0.0242,-0.1256,Yes
+Mortality (%),no trend,0.333,5.0,0.4524,0.0565,No
+Mean LOS (days),no trend,-0.467,-7.0,0.2597,-0.0726,No
+Mean cost (BRL),decreasing,-1.0,-15.0,0.0085,-1032.1686,Yes
+Mean age (years),no trend,0.467,7.0,0.2597,0.3314,No
+ICU use (%),no trend,0.6,9.0,0.1329,46.1963,No

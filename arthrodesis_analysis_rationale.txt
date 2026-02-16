@@ -1,0 +1,74 @@
+Analysis of Arthrodesis Procedures in the Brazilian Universal Healthcare System (SUS) from 2015-2020
+
+This analysis aims to understand the distribution and trends of arthrodesis procedures across Brazil. The data has been adjusted for inflation, and procedure rates have been computed by state and region in crude and population-adjusted forms. Furthermore, the data has been adjusted for age and sex using the World Health Organization's standards, allowing for a standardized comparison across regions and time.
+
+1. Data Loading and Cleaning
+The dataset was loaded, and preliminary explorations were made to understand its structure. Missing and inconsistent values were identified and cleaned.
+
+2. Inflation Adjustment
+Monetary values in the dataset were adjusted for inflation using Brazil's inflation rates. This ensures that the monetary values are comparable across years.
+
+3. Procedure Rates Computation
+Procedure rates were computed for both the patient's place of residence and the facility's location. These rates were adjusted for the population, providing a per 100,000 inhabitants metric.
+
+4. Age and Sex Adjustment
+Data was adjusted for age and sex using the World Health Organization's world standard population. This adjustment allows for a more standardized comparison, accounting for variations in age and sex distributions.
+
+5. Descriptive Statistics
+Descriptive statistics were computed for all groups in the analysis. This includes the mean, standard deviation, and a 95% confidence interval for procedure rates.
+
+Conclusion
+The analysis provides a comprehensive overview of arthrodesis procedures in Brazil, highlighting regional disparities and trends over time. Adjustments for inflation, population, age, and sex ensure that the insights are grounded in a standardized comparison framework.
+
+
+
+Sistema de Informações Hospitalares do SUS - SIHSUS
+Neste notebook, iremos demonstrar como acessar os dados do Sistema de Informações Hospitalares do SUS (SIHSUS) indexados pela Plataforma de Ciência de Dados aplicada à Saúde (PCDaS) através do R.
+install.packages("elastic")
+library("elastic")
+
+O primeiro passo é informar ao R os parâmetros de conexão com o índice no ES.
+
+Nos parâmetros es_user e es_pwd, informe o mesmo usuário e senha que você usar para acessar a plataforma.
+es_host <- "dados-pcdas.icict.fiocruz.br"
+es_port <- 443
+es_transport_schema <- "https"
+es_user <- "matheusmrech"
+es_pwd <- "$%Et#Y0"
+es_sih <- elastic::connect(host = es_host,
+                           port = es_port,
+                           transport_schema = es_transport_schema,
+                           user = es_user,
+                           pwd = es_pwd)
+print(es_sih)
+elastic::count(es_sih, "datasus-sih")
+getColnames <- function(colunas){
+    colunas <- lapply(X = colunas, FUN = function(t) gsub(pattern = "_source.", replacement = "", x = t, fixed = TRUE))
+    return(colunas)
+}
+convertSearchToDF <- function(index, connection, size=100, elastic_query){
+    search_result <- elastic::Search(conn=connection, index=index, body=elastic_query, asdf=TRUE,size=size)
+    df <- search_result$hits$hits
+    df[c("_index", "_type", "_id", "_score")] <- NULL
+    rownames(df) <- NULL
+    colnames(df) <- getColnames(colnames(df))
+    return(df)
+}
+convertAggsToDF <- function(index, connection, size=100, elastic_query){
+    search_result <- elastic::Search(connection, index=index, size=size, body=elastic_query,  asdf = TRUE)$aggregations
+    outputList <- list()
+    outputList <- c(outputList, search_result)
+    records <- lapply(outputList, "[[", "buckets")
+    df <- records$a1
+    return(df)
+}
+
+tudo <- '{
+  "query": {
+    "match_all": {}
+  }
+}'
+
+
+df <- convertSearchToDF(size=100, index="datasus-sih", connection=es_sih, elastic_query=tudo)
+head(df)
