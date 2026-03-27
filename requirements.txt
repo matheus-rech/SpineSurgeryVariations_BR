@@ -14,7 +14,7 @@ seaborn==0.13.2
 pillow==12.1.1
 
 # Geographic / spatial
-geopandas==1.1.0
+geopandas==1.1.2
 geobr==0.2.2
 shapely==2.1.0
 pyproj==3.7.2
